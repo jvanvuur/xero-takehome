@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Your Receipts</h2>
+  <h3>Upload New Receipt</h3>
+  <form action="upload" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="email" name="email" type="text" class="validate">
+        <label for="email">User Email</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="vendor" name="vendor" type="text" class="validate">
+        <label for="vendor">Vendor Name</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>File</span>
+          <input type="file" name="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        <input class='btn center-align col s12 m4 offset-m4 l4 offset-l4 xl2 offset-xl6' type="submit">
+    </div>
+  </form>
+</div>

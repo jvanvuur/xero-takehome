@@ -26,8 +26,31 @@
         </div>
       </div>
     </div>
-    <div class="row">
-        <input class='btn center-align col s12 m4 offset-m4 l4 offset-l4 xl2 offset-xl6' type="submit">
+    <div class="row center-align">
+        <input class='btn' type="submit">
     </div>
   </form>
+  <h3>Search for Document</h3>
+  <div class="row search-document">
+    <div class="input-field col s12">
+      <input id="document-id" name="email" type="text" class="validate">
+      <label for="document-id">Document ID</label>
+    </div>
+    <div class="input-field col s12 center-align">
+      <input class='btn' id='get-document' type="submit">
+    </div>
+  </div>
+  <table id='document'>
+    <thead>
+      <tr>
+          <th>Document ID</th>
+          <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+    </tbody>
+  </table>
 </div>

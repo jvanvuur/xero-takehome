@@ -1,6 +1,14 @@
 class DocumentsController < ApplicationController
-  # TODO: add search by id
-  def documents
+  # get document by id and email
+  def document
+    doc = Document.find_by(id: params['id'], uploaded_by: params['email'])
+    if doc.present?
+      render status: 200, json: doc.to_json
+    else
+      render status: 404, json: {
+        "messages": "Document not found!"
+      }
+    end
   end
 
   # upload document, parse through text, and save document into database

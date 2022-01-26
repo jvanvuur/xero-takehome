@@ -5,6 +5,8 @@ class Document < ApplicationRecord
   validates :uploaded_by, presence: true
   enum status: [:good, :content_missing]
 
+  before_save :check_status
+
   # fill document model from text input
   def fill_from_upload(text)
     text_by_line = text.downcase.split("\n")
@@ -35,6 +37,7 @@ class Document < ApplicationRecord
     return false
   end
 
+  # check status of document and update if needeed
   def check_status
     if self.uploaded_by.present? &&
         self.vendor.present? &&
@@ -135,5 +138,22 @@ class Document < ApplicationRecord
       return true
     end
     return false
+  end
+
+  # convert object to json payload
+  def to_json
+    {
+      id: self.id,
+      uploadedBy: self.uploaded_by,
+      uploadTimestamp: self.created_at,
+      filesize: nil, # TODO: fill filesize
+      vendorName: self.vendor,
+      invoiceDate: self.invoice_date,
+      totalAmount: self.amount,
+      totalAmountDue: self.amount_due,
+      currency: self.currency,
+      taxAmount: self.tax,
+      processingStatus: self.status.present? ? self.status.titleize : nil
+    }
   end
 end

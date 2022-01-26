@@ -19,6 +19,47 @@
 
     <script>
       $(document).ready(function() {
+        $('#get-document').on('click', function(e) {
+          // get values
+          var documentID = $('#document-id').val();
+          var email = $('#email').val();
+
+          // check for presence of values
+          if (documentID == "") {
+            displayErrorMessage('Document ID field must not be empty');
+            return
+          }
+          if (email == "") {
+            displayErrorMessage('User email field must not be empty');
+            return
+          }
+
+          // call endpoint
+          $(e.target).prop('disabled', true);
+          $.ajax({
+            type: 'get',
+            url: 'document/' + documentID + "?email=" + email,
+            context: this,
+            dataType: 'json',
+            success: function(data) {
+              $(e.target).prop('disabled', false);
+              $($('#document td')[0]).text(data["id"]);
+              $($('#document td')[1]).text(data["processingStatus"]);
+            },
+            error: function(data) {
+              $(e.target).prop('disabled', false);
+              try {
+                data.responseJSON.messages.forEach(function(message){
+                  displayErrorMessage(message);
+                });
+              } catch(err) {
+                displayErrorMessage('Something unexpected occurred');
+              }
+            }
+          });
+        });
+
+        // upload document
         $(document).on('submit', '.ajax-form', function(e) {
           e.preventDefault();
           $(this).find(':submit').prop('disabled', true);

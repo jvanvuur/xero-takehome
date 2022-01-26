@@ -2,6 +2,8 @@ class Document < ApplicationRecord
   # TODO: add price regex for $5. This only finds 5.00
   PRICE_REGEX = /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})/
 
+  validates :uploaded_by, presence: true
+
   # fill document model from text input
   def fill_from_upload(text)
     text_by_line = text.downcase.split("\n")

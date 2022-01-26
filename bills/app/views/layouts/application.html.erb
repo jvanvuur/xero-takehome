@@ -8,12 +8,66 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-            
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <script>
+      $(document).ready(function() {
+        $(document).on('submit', '.ajax-form', function(e) {
+          e.preventDefault();
+          $(this).find(':submit').prop('disabled', true);
+          var data = new FormData();
+          data.append("vendor", this.vendor.value);
+          data.append("email", this.email.value);
+          data.append("file", this.file.files[0]);
+          data.append("authenticity_token", this.authenticity_token.value);
+          $.ajax({
+            type: this.method,
+            url: this.action,
+            context: this,
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            data: data,
+            success: function(data) {
+              $(this).find(':submit').prop('disabled', false);
+              displayMessage("Sucessfully uploaded document. ID: " + data.id);
+            },
+            error: function(data) {
+              $(this).find(':submit').prop('disabled', false);
+              try {
+                data.responseJSON.messages.forEach(function(message){
+                  displayErrorMessage(message);
+                });
+              } catch(err) {
+                displayErrorMessage('Something unexpected occurred');
+              }
+            }
+          });
+        });
+      });
+
+      function displayMessage(message){
+        M.toast({html: message, displayLength: 7000, outDuration: 100});
+      };
+
+      function displayErrorMessage(message){
+        if (message == "true") {
+          return
+        }
+
+        M.toast({html: message +
+          "<a class='toast-close' onclick='M.Toast.getInstance(this.parentElement).dismiss();'>" +
+            "<i class='material-icons'>close</i>" +
+          "</a>", classes: 'error-toast', displayLength: 15000, outDuration: 100});
+      };
+    </script>
   </head>
 
   <body>

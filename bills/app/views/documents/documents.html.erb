@@ -1,7 +1,8 @@
 <div class="container">
   <h2>Your Receipts</h2>
   <h3>Upload New Receipt</h3>
-  <form action="upload" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+  <form action="upload" method="post" enctype="multipart/form-data" accept-charset="UTF-8" class='ajax-form'>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
     <div class="row">
       <div class="input-field col s12">
         <input id="email" name="email" type="text" class="validate">

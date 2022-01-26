@@ -13,3 +13,22 @@
  *= require_tree .
  *= require_self
  */
+
+ .toast {
+  font-weight: bold;
+}
+.toast a {
+  color: #fff;
+  text-decoration: underline;
+}
+.toast-close {
+  padding: 0px 5px;
+  margin-left: 15px;
+  font-size: 25px;
+  line-height: 25px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.error-toast {
+  background-color: red;
+}

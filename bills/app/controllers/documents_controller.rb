@@ -1,6 +1,5 @@
 class DocumentsController < ApplicationController
   # TODO: status
-  # TODO: show user doc ID after form submit
   # TODO: add search by id
   def documents
   end
@@ -24,7 +23,7 @@ class DocumentsController < ApplicationController
       }
     else
       render status: 400, json: {
-        "message": doc.errors.full_messages
+        "messages": doc.errors.full_messages
       }
     end
   end

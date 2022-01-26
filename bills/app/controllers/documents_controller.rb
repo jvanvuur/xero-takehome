@@ -1,5 +1,4 @@
 class DocumentsController < ApplicationController
-  # TODO: status
   # TODO: add search by id
   def documents
   end

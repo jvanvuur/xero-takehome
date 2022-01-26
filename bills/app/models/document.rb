@@ -3,6 +3,7 @@ class Document < ApplicationRecord
   PRICE_REGEX = /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})/
 
   validates :uploaded_by, presence: true
+  enum status: [:good, :content_missing]
 
   # fill document model from text input
   def fill_from_upload(text)
@@ -18,6 +19,8 @@ class Document < ApplicationRecord
       next if fill_amount(line, index, text_by_line)
       next if fill_date(line)
     end
+
+    check_status
   end
 
   # fill tax given text
@@ -30,6 +33,20 @@ class Document < ApplicationRecord
       end
     end
     return false
+  end
+
+  def check_status
+    if self.uploaded_by.present? &&
+        self.vendor.present? &&
+        self.invoice_date.present? &&
+        self.amount.present? &&
+        self.amount_due.present? &&
+        self.currency.present? &&
+        self.tax.present?
+      self.status = Document.statuses[:good]
+    else
+      self.status = Document.statuses[:content_missing]
+    end
   end
 
    # fill amount given text

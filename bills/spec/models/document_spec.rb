@@ -12,6 +12,25 @@ RSpec.describe "Document", :type => :model do
         "Tax $5.00\n" +
         "Amount due\n" +
         "$55.00 CAD\n"
+      doc.vendor = 'company'
+      doc.uploaded_by = 'me@me.com'
+      doc.fill_from_upload(document_text)
+
+      expect(doc.invoice_date).to eq(DateTime.parse("december 20, 2021"))
+      expect(doc.amount).to eq(50)
+      expect(doc.amount_due).to eq(55)
+      expect(doc.currency).to eq('cad')
+      expect(doc.tax).to eq(5)
+      expect(doc.status).to eq('good')
+    end
+
+    it "should set status to missing content when content is missing" do
+      document_text =
+        "the company\n" +
+        "December 20, 2021\n" +
+        "Total $50.00\n" +
+        "Amount due\n" +
+        "$55.00 CAD\n"
       doc.fill_from_upload(document_text)
 
       expect(doc.vendor).to eq(nil)
@@ -19,8 +38,7 @@ RSpec.describe "Document", :type => :model do
       expect(doc.amount).to eq(50)
       expect(doc.amount_due).to eq(55)
       expect(doc.currency).to eq('cad')
-      expect(doc.tax).to eq(5)
-      expect(doc.status).to eq(nil)
+      expect(doc.status).to eq('content_missing')
     end
   end
 

@@ -22,7 +22,7 @@
         $('#get-document').on('click', function(e) {
           // get values
           var documentID = $('#document-id').val();
-          var email = $('#email').val();
+          var email = $('#document-email').val();
 
           // check for presence of values
           if (documentID == "") {
@@ -45,6 +45,7 @@
               $(e.target).prop('disabled', false);
               $($('#document td')[0]).text(data["id"]);
               $($('#document td')[1]).text(data["processingStatus"]);
+              displayMessage("Sucessfully found document");
             },
             error: function(data) {
               $(e.target).prop('disabled', false);

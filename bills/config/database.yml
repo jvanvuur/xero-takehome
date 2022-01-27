@@ -23,3 +23,12 @@ test:
 production:
   <<: *default
   database: db/production.sqlite3
+
+docker:
+  <<: *default
+  adapter: postgresql
+  encoding: utf8
+  host: db
+  database: bills
+  username: postgres
+  password: password

@@ -72,4 +72,8 @@ group :test do
   gem "webdrivers"
 end
 
+group :docker do
+  gem "pg"
+end
+
 gem "pdftotext"

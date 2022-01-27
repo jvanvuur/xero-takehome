@@ -6,7 +6,7 @@ class DocumentsController < ApplicationController
       render status: 200, json: doc.to_json
     else
       render status: 404, json: {
-        "messages": "Document not found!"
+        "messages": ["Document not found!"]
       }
     end
   end
